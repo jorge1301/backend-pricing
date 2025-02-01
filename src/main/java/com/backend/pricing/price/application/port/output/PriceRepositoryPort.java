@@ -1,10 +1,15 @@
 package com.backend.pricing.price.application.port.output;
 
 import com.backend.pricing.common.application.port.output.IRepositoryPort;
-import com.backend.pricing.price.infrastructure.adapter.output.database.model.PriceEntity;
+import com.backend.pricing.price.domain.entities.Price;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-public interface PriceRepositoryPort extends IRepositoryPort<PriceEntity, Long> {
-    Flux<PriceEntity> getApplicablePrice(Long brandId, Long productId);
+import java.time.LocalDateTime;
+
+public interface PriceRepositoryPort extends IRepositoryPort<Price, Long> {
+    Flux<Price> getApplicablePrice(Long brandId, Long productId);
+
+    Mono<Boolean> existsPrice(Long brandId, Long productId, LocalDateTime startDate);
 
 }
