@@ -4,17 +4,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDateTime;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class IntegrationControllerTest {
-
-    @LocalServerPort
-    private int port;
-
     @Autowired
     private WebTestClient webTestClient;
 
