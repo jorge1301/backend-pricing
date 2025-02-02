@@ -6,6 +6,7 @@ import com.backend.pricing.price.application.service.PriceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -19,16 +20,18 @@ public class PriceController {
     private final PriceService priceService;
 
     @PostMapping
-    public Mono<PriceResponseDTO> savePrice(@Valid @RequestBody PriceRequestDTO requestDTO) {
-        return this.priceService.savePrice(requestDTO);
+    public Mono<ResponseEntity<PriceResponseDTO>> savePrice(@Valid @RequestBody PriceRequestDTO requestDTO) {
+        return this.priceService.savePrice(requestDTO)
+                .map(ResponseEntity::ok);
     }
 
     @GetMapping
-    public Mono<PriceResponseDTO> getPrice(@RequestParam("brandCode") Long brandId,
-                                           @RequestParam("productCode") Long productId,
-                                           @RequestParam("dateApplication")
-                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-                                           LocalDateTime dateApplication) {
-        return this.priceService.getApplicablePrice(brandId, productId, dateApplication);
+    public Mono<ResponseEntity<PriceResponseDTO>> getPrice(@RequestParam("brandCode") Long brandId,
+                                                           @RequestParam("productCode") Long productId,
+                                                           @RequestParam("dateApplication")
+                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                                                           LocalDateTime dateApplication) {
+        return this.priceService.getApplicablePrice(brandId, productId, dateApplication)
+                .map(ResponseEntity::ok);
     }
 }
